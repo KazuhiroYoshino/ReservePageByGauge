@@ -1,1 +1,2 @@
 # ReservePageByGauge
+## マークダウンでテストケースを記述するGaugeをSelenium練習サイトで使ってみます
