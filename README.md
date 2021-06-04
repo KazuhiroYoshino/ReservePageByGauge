@@ -1,0 +1,2 @@
+# ReservePageByGauge
+Selenium練習サイトをGaugeでテストします
