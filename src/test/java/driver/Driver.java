@@ -44,7 +44,6 @@ public class Driver {
     private final String BROWSER_OPERA = "Opera";
     private final String BROWSER_CR = "Chrome";
 
-    private final int BROWSER_TYPE_IE = 0;
     private final int BROWSER_TYPE_EDGE = 1;
     private final int BROWSER_TYPE_FF = 2;
     private final int BROWSER_TYPE_OPERA = 3;
@@ -1728,22 +1727,14 @@ public class Driver {
         return res;
     }
 
-    public String getReserveUser(String commandLocater1, String commandLocater2) throws InterruptedException {
+    public String getReserveUser(String commandLocater1) throws InterruptedException {
         String contactText = null;
 
         WebElement name = webDriver.findElement(By.id(commandLocater1));
         wait.until(ExpectedConditions.visibilityOf(name));
         username = name.getAttribute("value");
 
-        WebElement contact = webDriver.findElement(By.id(commandLocater2));
-        wait.until(ExpectedConditions.visibilityOf(contact));
-        Select select = new Select(contact);
-        List<WebElement> options = select.getAllSelectedOptions();
-        for (WebElement option : options) {
-            contactText = option.getText();
-        }
         Thread.sleep(500);
         return contactText;
     }
-
 }
