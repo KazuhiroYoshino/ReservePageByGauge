@@ -1,0 +1,8 @@
+# WebドライバはCHROMEを選択する
+* Webドライバは"Chrome"を選択する
+
+# 予約サイトを表示する
+* ページ"http://example.selenium.jp/reserveApp_Renewal/"を表示する
+
+# テスト終了
+* シナリオを終了してブラウザを閉じる
