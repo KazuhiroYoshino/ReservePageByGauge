@@ -16,6 +16,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.SearchContext;
 
 import java.net.MalformedURLException;
+import static org.junit.Assert.*;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -62,6 +63,11 @@ public class Driver {
     public String contact;
     public String email;
     public String tel;
+    public int headCountValue;
+    public String breakFastValue;
+    public String planAvalue;
+    public String planBvalue;
+    public String guestValue;
 
     // Initialize a webDriver instance of required browser
     // Since this does not have a significance in the application's business domain,
