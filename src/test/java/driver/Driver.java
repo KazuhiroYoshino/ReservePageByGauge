@@ -36,6 +36,9 @@ public class Driver {
     // Holds the WebDriver instance
     public static WebDriver webDriver;
 
+    public static String mobileUrl;
+    public static String mobileBrowserType;
+
     private int DriverType;
 
     // ブラウザ名
@@ -75,6 +78,7 @@ public class Driver {
     public void initializeDriver() {
         webDriver = DriverFactory.getDriver();
         wait = new WebDriverWait(webDriver, 10);
+        mobileBrowserType = "Chrome";
     }
 
     // Close the webDriver instance
@@ -95,7 +99,20 @@ public class Driver {
             this.DriverType = BROWSER_TYPE_CR;
         }
         // WebDriverのセット
-        DriverFactory.getDriver();
+        webDriver = DriverFactory.getDriver();
+        wait = new WebDriverWait(webDriver, 10);
+        mobileBrowserType = "Chrome";
+    }
+
+    /**
+     * テスト失敗時のブラウザ再起動
+     */
+    public void rebootBrowser(String mobileBrowserType, String mobileUrl)
+            throws InterruptedException, MalformedURLException {
+
+        selectWebDriver(mobileBrowserType);
+        openAndWait(mobileUrl);
+
     }
 
     public void rebootBrowserMB(String mobileMode, int mobileWidth, int mobileHeight, double mobilePixel,
@@ -124,6 +141,7 @@ public class Driver {
 
     public void openAndWait(String location) throws InterruptedException {
         webDriver.navigate().to(location);
+        mobileUrl = location;
         Thread.sleep(5000);
     }
 
@@ -160,17 +178,6 @@ public class Driver {
             // webDriver.quit();
         }
         Thread.sleep(2000);
-    }
-
-    /**
-     * テスト失敗時のブラウザ再起動
-     */
-    public void rebootBrowser(String mobileBrowserType, String mobileUrl)
-            throws InterruptedException, MalformedURLException {
-
-        selectWebDriver(mobileBrowserType);
-        openAndWait(mobileUrl);
-
     }
 
     /**
