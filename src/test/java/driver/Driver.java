@@ -36,6 +36,9 @@ public class Driver {
     // Holds the WebDriver instance
     public static WebDriver webDriver;
 
+    public static String mobileUrl;
+    public static String mobileBrowserType;
+
     private int DriverType;
 
     // ブラウザ名
@@ -44,7 +47,6 @@ public class Driver {
     private final String BROWSER_OPERA = "Opera";
     private final String BROWSER_CR = "Chrome";
 
-    private final int BROWSER_TYPE_IE = 0;
     private final int BROWSER_TYPE_EDGE = 1;
     private final int BROWSER_TYPE_FF = 2;
     private final int BROWSER_TYPE_OPERA = 3;
@@ -76,6 +78,7 @@ public class Driver {
     public void initializeDriver() {
         webDriver = DriverFactory.getDriver();
         wait = new WebDriverWait(webDriver, 10);
+        mobileBrowserType = "Chrome";
     }
 
     // Close the webDriver instance
@@ -96,7 +99,20 @@ public class Driver {
             this.DriverType = BROWSER_TYPE_CR;
         }
         // WebDriverのセット
-        DriverFactory.getDriver();
+        webDriver = DriverFactory.getDriver();
+        wait = new WebDriverWait(webDriver, 10);
+        mobileBrowserType = "Chrome";
+    }
+
+    /**
+     * テスト失敗時のブラウザ再起動
+     */
+    public void rebootBrowser(String mobileBrowserType, String mobileUrl)
+            throws InterruptedException, MalformedURLException {
+
+        selectWebDriver(mobileBrowserType);
+        openAndWait(mobileUrl);
+
     }
 
     public void rebootBrowserMB(String mobileMode, int mobileWidth, int mobileHeight, double mobilePixel,
@@ -125,6 +141,7 @@ public class Driver {
 
     public void openAndWait(String location) throws InterruptedException {
         webDriver.navigate().to(location);
+        mobileUrl = location;
         Thread.sleep(5000);
     }
 
@@ -161,17 +178,6 @@ public class Driver {
             // webDriver.quit();
         }
         Thread.sleep(2000);
-    }
-
-    /**
-     * テスト失敗時のブラウザ再起動
-     */
-    public void rebootBrowser(String mobileBrowserType, String mobileUrl)
-            throws InterruptedException, MalformedURLException {
-
-        selectWebDriver(mobileBrowserType);
-        openAndWait(mobileUrl);
-
     }
 
     /**
@@ -1728,22 +1734,14 @@ public class Driver {
         return res;
     }
 
-    public String getReserveUser(String commandLocater1, String commandLocater2) throws InterruptedException {
+    public String getReserveUser(String commandLocater1) throws InterruptedException {
         String contactText = null;
 
         WebElement name = webDriver.findElement(By.id(commandLocater1));
         wait.until(ExpectedConditions.visibilityOf(name));
         username = name.getAttribute("value");
 
-        WebElement contact = webDriver.findElement(By.id(commandLocater2));
-        wait.until(ExpectedConditions.visibilityOf(contact));
-        Select select = new Select(contact);
-        List<WebElement> options = select.getAllSelectedOptions();
-        for (WebElement option : options) {
-            contactText = option.getText();
-        }
         Thread.sleep(500);
         return contactText;
     }
-
 }
